@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://berrizak.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/certificates/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/certificates/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/certificates/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/certificates/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/certificates/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/certificates/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/certificates/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/certificates/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/corner-filter/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/corner-filter/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/corner-filter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/corner-filter/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/corner-filter/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/corner-filter/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/corner-filter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/corner-filter/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/ghodoq-shark/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/ghodoq-shark/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/ghodoq-shark/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/ghodoq-shark/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/ghodoq-shark/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/ghodoq-shark/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/ghodoq-shark/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/ghodoq-shark/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/altowayan/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/altowayan/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/altowayan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/altowayan/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/altowayan/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/altowayan/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/altowayan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/altowayan/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/qeyam/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/qeyam/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/qeyam/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/qeyam/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/qeyam/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/qeyam/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/qeyam/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/qeyam/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/taif-almasia/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/taif-almasia/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/taif-almasia/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/taif-almasia/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/taif-almasia/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/taif-almasia/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/taif-almasia/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/taif-almasia/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/case-studies/gmraa/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/gmraa/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/gmraa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/gmraa/"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://berrizak.com/ar/case-studies/gmraa/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://berrizak.com/case-studies/gmraa/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://berrizak.com/ar/case-studies/gmraa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://berrizak.com/case-studies/gmraa/"/>
+    <priority>0.7</priority>
+  </url>
+</urlset>
