@@ -1,8 +1,20 @@
 # -*- coding: utf-8 -*-
 """Static site generator for berrizak.com (EN + AR). Run: python build_site.py"""
-import json, os
+import hashlib, json, os
 
 OUT = os.path.dirname(os.path.abspath(__file__))
+
+def asset_v(rel_path):
+    p = os.path.join(OUT, rel_path)
+    try:
+        with open(p, "rb") as f:
+            return hashlib.sha256(f.read()).hexdigest()[:8]
+    except OSError:
+        return "1"
+
+CSS_V = asset_v("assets/css/styles.css")
+MAIN_JS_V = asset_v("assets/js/main.js")
+CERTS_JS_V = asset_v("assets/js/certs.js")
 SITE = "https://berrizak.com/"
 FORM = "https://formspree.io/f/xlgwyjar"
 CV = "https://drive.google.com/file/d/1w4YUDUS22nG43a_o8UkP_7yZ_w_jPmtU/view?usp=sharing"
@@ -19,8 +31,8 @@ THEME_BOOT = ("<script>(function(){try{localStorage.removeItem('bz-theme');"
               "if(t!=='dark'){t='light';}"
               "document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>")
 
-def svg(paths):
-    return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
+def svg(paths, size=20):
+    return (f'<svg width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>')
 
 ICON = {
@@ -756,7 +768,7 @@ def head(lang, depth, title, desc, path, extra_ld=None, robots="index, follow"):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="{FONTS}" rel="stylesheet">
-  <link rel="stylesheet" href="{r}assets/css/styles.css">{ld_tag}
+  <link rel="stylesheet" href="{r}assets/css/styles.css?v={CSS_V}">{ld_tag}
 </head>
 <body>
 <a href="#main" class="skip-link">{T[lang]['skip']}</a>
@@ -823,7 +835,7 @@ def footer(lang, depth, extra_scripts=""):
     <div class="footer-copy">© <span id="year">2026</span> {name} · {t['footer']}</div>
   </div>
 </footer>
-<script src="{r}assets/js/main.js" defer></script>{extra_scripts}
+<script src="{r}assets/js/main.js?v={MAIN_JS_V}" defer></script>{extra_scripts}
 </body>
 </html>
 """
@@ -1379,7 +1391,7 @@ def certs_page(lang):
       <div class="certs-toolbar-top">
         <div class="certs-tabs" role="tablist">{cat_tabs}</div>
         <div class="cert-search-wrap">
-          <svg class="cert-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <svg class="cert-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
           <input type="search" id="certSearch" class="cert-search-input" placeholder="{t['certs_search_ph']}" autocomplete="off">
           <button type="button" id="certSearchClear" class="cert-search-clear" aria-label="Clear search" hidden>×</button>
         </div>
@@ -1463,7 +1475,7 @@ def certs_page(lang):
 </div>
 <script id="certsData" type="application/json">{payload_json}</script>
 """
-    extra = f'\n<script src="{r}assets/js/certs.js" defer></script>'
+    extra = f'\n<script src="{r}assets/js/certs.js?v={CERTS_JS_V}" defer></script>'
     write(("ar/" if lang == "ar" else "") + path + "index.html", h + body + footer(lang, depth, extra))
 
 def write_sitemap():
@@ -1491,7 +1503,7 @@ def page_404():
 <div class="error-code" aria-hidden="true">404</div><h1>{t['e404_t']}</h1><p>{t['e404_p']}</p>
 <a href="/" class="btn btn-primary">{t['e404_b']}</a> <a href="/ar/" class="btn btn-secondary">العربية</a>
 </div></section></main>
-<script src="/assets/js/main.js" defer></script></body></html>
+<script src="/assets/js/main.js?v={MAIN_JS_V}" defer></script></body></html>
 """
     write("404.html", h + body)
 
