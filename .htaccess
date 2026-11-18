@@ -1,5 +1,9 @@
 RewriteEngine On
 
+# Block access to hidden repo/build directories and generator script
+RewriteRule ^\.(git|github|builds) - [F,L]
+RewriteRule ^build_site\.py$ - [F,L]
+
 # If the request is not a real file
 RewriteCond %{REQUEST_FILENAME} !-f
 
@@ -8,4 +12,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # Redirect everything to index.html
 RewriteRule ^ index.html [L]
-RewriteRule ^\.builds - [F,L]
