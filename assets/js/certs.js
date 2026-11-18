@@ -19,9 +19,43 @@
 
   var LANG = PAYLOAD.lang === 'ar' ? 'ar' : 'en';
   var IS_RTL = LANG === 'ar';
+  var ASSET_ROOT = PAYLOAD.assetRoot || '../';
   var CERTS = Array.isArray(PAYLOAD.certs) ? PAYLOAD.certs : [];
   var PROGRAMS = Array.isArray(PAYLOAD.programs) ? PAYLOAD.programs : [];
   var UI = PAYLOAD.ui || {};
+
+  function createIssuerEl(cert, small) {
+    var wrap = document.createElement('span');
+    wrap.className = 'issuer-lockup' + (small ? ' issuer-lockup--sm' : '');
+    var keys = Array.isArray(cert.issuerKeys) && cert.issuerKeys.length ? cert.issuerKeys : [cert.issuerKey];
+    var labels = { google: 'Google', ibm: 'IBM', meta: 'Meta', skillup: 'SkillUp', coursera: 'Coursera' };
+    keys.forEach(function (k, idx) {
+      if (idx > 0) {
+        var sep = document.createElement('span');
+        sep.className = 'issuer-sep';
+        sep.textContent = '&';
+        wrap.appendChild(sep);
+      }
+      var brand = document.createElement('span');
+      brand.className = 'issuer-brand';
+      var img = document.createElement('img');
+      img.src = ASSET_ROOT + 'assets/images/issuers/' + k + '.png';
+      if (k === 'skillup') {
+        img.className = 'issuer-wordmark';
+        img.alt = 'SkillUp';
+        brand.appendChild(img);
+      } else {
+        img.className = 'issuer-icon' + (k === 'coursera' ? ' issuer-icon--round' : '');
+        img.alt = '';
+        var txt = document.createElement('span');
+        txt.textContent = labels[k] || cert.issuer;
+        brand.appendChild(img);
+        brand.appendChild(txt);
+      }
+      wrap.appendChild(brand);
+    });
+    return wrap;
+  }
   var BY_CODE = Object.create(null);
   CERTS.forEach(function (c, idx) {
     c._index = idx;
@@ -571,7 +605,13 @@
     var openEl = splitRoot.querySelector('[data-pdf-newtab]');
     var expandEl = splitRoot.querySelector('[data-pdf-expand]');
 
-    if (metaEl) metaEl.textContent = cert.issuer + ' · ' + cert.typeLabel + ' · ' + cert.date;
+    if (metaEl) {
+      metaEl.innerHTML = '';
+      metaEl.appendChild(createIssuerEl(cert, true));
+      var metaType = document.createElement('span');
+      metaType.textContent = ' · ' + cert.typeLabel;
+      metaEl.appendChild(metaType);
+    }
     if (titleEl) titleEl.textContent = cert.title;
     if (verifyEl) verifyEl.href = cert.verifyUrl;
     if (dlEl) {
@@ -621,12 +661,12 @@
       top.className = 'split-item-top';
       var iss = document.createElement('span');
       iss.className = 'split-item-issuer';
-      iss.textContent = cert.issuer + ' · ' + cert.typeLabel;
-      var dt = document.createElement('span');
-      dt.className = 'split-item-date';
-      dt.textContent = cert.date;
+      iss.appendChild(createIssuerEl(cert, true));
+      var tp = document.createElement('span');
+      tp.className = 'split-item-date';
+      tp.textContent = cert.typeLabel;
       top.appendChild(iss);
-      top.appendChild(dt);
+      top.appendChild(tp);
 
       var ttl = document.createElement('div');
       ttl.className = 'split-item-title';
@@ -828,7 +868,10 @@
 
       var sub = document.createElement('span');
       sub.className = 'pdf-rail-sub';
-      sub.textContent = cert.issuer + ' · ' + cert.typeLabel;
+      sub.appendChild(createIssuerEl(cert, true));
+      var subType = document.createElement('span');
+      subType.textContent = ' · ' + cert.typeLabel;
+      sub.appendChild(subType);
 
       info.appendChild(ttl);
       info.appendChild(sub);
@@ -857,9 +900,15 @@
     var prevBtn = modal.querySelector('[data-modal-nav="prev"]');
     var nextBtn = modal.querySelector('[data-modal-nav="next"]');
 
-    if (badgeEl) badgeEl.textContent = cert.issuer + ' · ' + cert.typeLabel;
+    if (badgeEl) {
+      badgeEl.innerHTML = '';
+      badgeEl.appendChild(createIssuerEl(cert, true));
+      var bType = document.createElement('span');
+      bType.textContent = ' · ' + cert.typeLabel;
+      badgeEl.appendChild(bType);
+    }
     if (titleEl) titleEl.textContent = cert.title;
-    if (subEl) subEl.textContent = cert.date + (cert.titleAr && LANG === 'en' ? '' : '');
+    if (subEl) subEl.textContent = cert.catLabel || '';
     if (verifyEl) verifyEl.href = cert.verifyUrl;
     if (dlEl) {
       dlEl.href = cert.pdf;

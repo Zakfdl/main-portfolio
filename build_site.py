@@ -917,6 +917,32 @@ PERSON = {"@type": "Person", "@id": SITE + "#person", "name": "Zakaria Fadl", "j
 def cert_title(c, lang):
     return c["title_ar"] if lang == "ar" else c["title"]
 
+ISSUER_LABELS = {
+    "google": "Google",
+    "ibm": "IBM",
+    "meta": "Meta",
+    "skillup": "SkillUp",
+    "coursera": "Coursera",
+}
+
+def issuer_brand_html(key, r):
+    label = ISSUER_LABELS.get(key, key.title())
+    src = f"{r}assets/images/issuers/{key}.png"
+    if key == "skillup":
+        return f'<span class="issuer-brand"><img class="issuer-wordmark" src="{src}" width="52" height="15" alt="{label}"></span>'
+    rnd = " issuer-icon--round" if key == "coursera" else ""
+    return f'<span class="issuer-brand"><img class="issuer-icon{rnd}" src="{src}" width="18" height="18" alt=""><span>{label}</span></span>'
+
+def issuer_lockup_html(issuer_str, r, small=False):
+    parts = [p.strip().lower() for p in issuer_str.replace("&", ",").split(",") if p.strip()]
+    cls = "issuer-lockup issuer-lockup--sm" if small else "issuer-lockup"
+    chunks = []
+    for i, k in enumerate(parts):
+        if i:
+            chunks.append('<span class="issuer-sep">&amp;</span>')
+        chunks.append(issuer_brand_html(k, r))
+    return f'<span class="{cls}">{"".join(chunks)}</span>'
+
 def cert_card_html(c, lang, r, lroot, for_home=False):
     t = T[lang]
     code = c["code"]
@@ -924,28 +950,35 @@ def cert_card_html(c, lang, r, lroot, for_home=False):
     pdf_href = f"{lroot}certificates/?cert={code}" if for_home else cert_pdf_rel(c, r)
     open_attr = "" if for_home else f' data-open-cert="{code}"'
     type_lbl = CERT_TYPES[c["type"]][lang]
+    cat_map = dict(t["certs_cats"])
+    cat_lbl = cat_map.get(c["cat"], c["cat"])
     badge_extra = f' · {len(c["children"])}' if "children" in c else ""
     title = cert_title(c, lang)
     sub_en = f'<div class="cert-sub-en" dir="ltr">{c["title"]}</div>' if lang == "ar" and c["title_ar"] != c["title"] else ""
-    parent_tag = ""
+    track_note = ""
     if not for_home and c.get("parent") and c["parent"] in CERT_BY_CODE:
         p = CERT_BY_CODE[c["parent"]]
-        parent_tag = f'<div class="cert-parent-tag">{t["certs_part_of"]}: {cert_title(p, lang)}</div>'
+        track_note = f'<div class="cert-track-note"><span>{t["certs_part_of"]}: <strong>{cert_title(p, lang)}</strong></span></div>'
     dl_btn = "" if for_home else f'<a class="cert-btn-link" href="{cert_pdf_rel(c, r)}" download="Coursera-{code}.pdf" title="{t["cert_dl_btn"]}" aria-label="{t["cert_dl_btn"]}">↓</a>'
     return f"""<article class="cert-card reveal" data-cert-code="{code}" data-cat="{c['cat']}">
-  <div class="cert-top">
-    <span class="cert-issuer">{c['issuer']}</span>
+  <div class="cert-card-head">
+    {issuer_lockup_html(c['issuer'], r)}
     <span class="cert-badge-verified">{t['cert_verified']}</span>
   </div>
-  <div>
-    <h3 class="cert-name">{title}</h3>
-    {sub_en}
-  </div>
-  <p class="cert-desc">{pick(c['desc'], lang)}</p>
-  {parent_tag}
-  <div class="cert-meta-row">
-    <span class="cert-type-pill">{type_lbl}{badge_extra}</span>
-    <span>{pick(c['date'], lang)} · {code}</span>
+  <div class="cert-card-body">
+    <div class="cert-kicker-row">
+      <div class="cert-kicker-pills">
+        <span class="cert-type-pill">{type_lbl}{badge_extra}</span>
+        <span class="cert-cat-pill">{cat_lbl}</span>
+      </div>
+      <span class="cert-id-chip">{code}</span>
+    </div>
+    <div>
+      <h3 class="cert-name">{title}</h3>
+      {sub_en}
+    </div>
+    <p class="cert-desc">{pick(c['desc'], lang)}</p>
+    {track_note}
   </div>
   <div class="cert-card-actions">
     <a class="cert-btn-preview" href="{pdf_href}"{open_attr}>{ICON['doc']}<span>{t['cert_preview']}</span></a>
@@ -1275,7 +1308,7 @@ def certs_page(lang):
     <span class="program-course-num">{idx:02d}</span>
     <div>
       <div class="program-course-title">{cert_title(ch, lang)}</div>
-      <div class="program-course-date">{ch['issuer']} · {pick(ch['date'], lang)}</div>
+      <div class="program-course-issuer">{issuer_lockup_html(ch['issuer'], r, small=True)}</div>
     </div>
   </div>
   <div class="program-course-btns">
@@ -1285,13 +1318,16 @@ def certs_page(lang):
 </div>""")
         prog_cards.append(f"""<article class="program-card reveal">
   <div class="program-overview">
-    <div class="program-badges">
-      <span class="program-pill-accent">{p_type} · {len(p['children'])} {'دورات' if lang == 'ar' else 'Courses'}</span>
-      <span class="cert-badge-verified">{t['cert_verified']}</span>
+    <div class="program-top">
+      {issuer_lockup_html(p['issuer'], r)}
+      <div class="program-badges">
+        <span class="program-pill-accent">{p_type} · {len(p['children'])} {'دورات' if lang == 'ar' else 'Courses'}</span>
+        <span class="cert-badge-verified">{t['cert_verified']}</span>
+      </div>
     </div>
     <h3 class="program-title">{cert_title(p, lang)}</h3>
     <p class="program-desc">{pick(p['desc'], lang)}</p>
-    <div class="program-meta">{p['issuer']} · {pick(p['date'], lang)} · {p_code}</div>
+    <div class="program-meta">ID · {p_code}</div>
     <div class="program-actions">
       <a class="btn btn-primary btn-sm" href="{p_pdf}" data-open-cert="{p_code}">{t['certs_preview_prog']}</a>
       <a class="btn btn-secondary btn-sm" href="{p_pdf}" download="Coursera-{p_code}.pdf">{t['cert_dl_btn']} ↓</a>
@@ -1311,12 +1347,21 @@ def certs_page(lang):
         f'<button type="button" class="filter-pill{" is-active" if key == "all" else ""}" role="tab" aria-selected="{"true" if key == "all" else "false"}" data-filter-cat="{key}"><span>{lbl}</span><span class="filter-pill-count">{cat_counts.get(key, 0)}</span></button>'
         for key, lbl in t["certs_cats"]
     )
+    def chip_inner(key, lbl):
+        if key == "all":
+            return lbl
+        if key == "skillup":
+            return f'<img class="issuer-wordmark" src="{r}assets/images/issuers/skillup.png" width="46" height="13" alt="SkillUp">'
+        rnd = " issuer-icon--round" if key == "coursera" else ""
+        return f'<img class="issuer-icon{rnd}" src="{r}assets/images/issuers/{key}.png" width="14" height="14" alt=""><span>{lbl}</span>'
+
     issuer_chips = "".join(
-        f'<button type="button" class="issuer-chip{" is-active" if key == "all" else ""}" aria-pressed="{"true" if key == "all" else "false"}" data-filter-issuer="{key}">{lbl}</button>'
+        f'<button type="button" class="issuer-chip{" is-active" if key == "all" else ""}" aria-pressed="{"true" if key == "all" else "false"}" data-filter-issuer="{key}">{chip_inner(key, lbl)}</button>'
         for key, lbl in t["certs_issuers"]
     )
     all_cards = "".join(cert_card_html(c, lang, r, lroot, for_home=False) for c in CERT_ITEMS)
 
+    cat_map = dict(t["certs_cats"])
     json_certs = []
     for c in CERT_ITEMS:
         ik = [k.strip().lower() for k in c["issuer"].replace("&", ",").split(",")]
@@ -1332,7 +1377,7 @@ def certs_page(lang):
             "type": c["type"],
             "typeLabel": CERT_TYPES[c["type"]][lang],
             "cat": c["cat"],
-            "date": pick(c["date"], lang),
+            "catLabel": cat_map.get(c["cat"], c["cat"]),
             "title": cert_title(c, lang),
             "titleAr": c["title_ar"],
             "desc": pick(c["desc"], lang),
@@ -1345,6 +1390,7 @@ def certs_page(lang):
     ]
     payload = {
         "lang": lang,
+        "assetRoot": r,
         "certs": json_certs,
         "programs": json_programs,
         "ui": {
